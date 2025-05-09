@@ -1,0 +1,378 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base colors */
+    --background: 30 25% 98%;
+    --foreground: 220 10% 20%;
+
+    /* Card and UI elements */
+    --card: 0 0% 100%;
+    --card-foreground: 220 10% 20%;
+    --card-border: 220 13% 91%;
+    --card-hover: 220 13% 96%;
+
+    /* Popover and dropdown */
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 10% 20%;
+
+    /* Primary accent - light blue */
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 199 89% 42%;
+
+    /* Secondary - soft beige */
+    --secondary: 30 25% 94%;
+    --secondary-foreground: 220 10% 20%;
+    --secondary-hover: 30 25% 90%;
+
+    /* Muted elements */
+    --muted: 220 13% 96%;
+    --muted-foreground: 220 10% 46%;
+
+    /* Accent - soft teal */
+    --accent: 174 75% 46%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 174 75% 40%;
+
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border, input, and focus */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 199 89% 48%;
+
+    /* Radius */
+    --radius: 0.75rem;
+
+    /* App-specific colors */
+    --app-background: 30 25% 98%;
+    --header-background: 199 30% 95%;
+    --card-highlight: 199 30% 95%;
+    --card-shadow: 220 10% 10% / 0.05;
+  }
+
+  .dark {
+    /* Base colors */
+    --background: 220 20% 10%;
+    --foreground: 220 10% 98%;
+
+    /* Card and UI elements */
+    --card: 220 20% 13%;
+    --card-foreground: 220 10% 98%;
+    --card-border: 220 20% 18%;
+    --card-hover: 220 20% 16%;
+
+    /* Popover and dropdown */
+    --popover: 220 20% 13%;
+    --popover-foreground: 220 10% 98%;
+
+    /* Primary accent - light blue */
+    --primary: 199 70% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 199 70% 40%;
+
+    /* Secondary - darker beige */
+    --secondary: 220 20% 16%;
+    --secondary-foreground: 220 10% 98%;
+    --secondary-hover: 220 20% 20%;
+
+    /* Muted elements */
+    --muted: 220 20% 16%;
+    --muted-foreground: 220 10% 70%;
+
+    /* Accent - darker teal */
+    --accent: 174 60% 40%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 174 60% 35%;
+
+    /* Destructive */
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border, input, and focus */
+    --border: 220 20% 18%;
+    --input: 220 20% 18%;
+    --ring: 199 70% 45%;
+
+    /* App-specific colors */
+    --app-background: 220 20% 10%;
+    --header-background: 220 20% 13%;
+    --card-highlight: 220 20% 16%;
+    --card-shadow: 220 10% 5% / 0.1;
+  }
+
+  [data-theme="toilet"] {
+    /* Base colors */
+    --background: 30 15% 15%;
+    --foreground: 30 10% 95%;
+
+    /* Card and UI elements */
+    --card: 30 15% 18%;
+    --card-foreground: 30 10% 95%;
+    --card-border: 30 15% 22%;
+    --card-hover: 30 15% 20%;
+
+    /* Popover and dropdown */
+    --popover: 30 15% 18%;
+    --popover-foreground: 30 10% 95%;
+
+    /* Primary accent - brown */
+    --primary: 30 60% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 30 60% 40%;
+
+    /* Secondary - darker brown */
+    --secondary: 30 30% 25%;
+    --secondary-foreground: 30 10% 95%;
+    --secondary-hover: 30 30% 30%;
+
+    /* Muted elements */
+    --muted: 30 15% 22%;
+    --muted-foreground: 30 10% 75%;
+
+    /* Accent - gold */
+    --accent: 40 80% 50%;
+    --accent-foreground: 30 15% 15%;
+    --accent-hover: 40 80% 45%;
+
+    /* Destructive */
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border, input, and focus */
+    --border: 30 15% 22%;
+    --input: 30 15% 22%;
+    --ring: 30 60% 45%;
+
+    /* App-specific colors */
+    --app-background: 30 15% 15%;
+    --header-background: 30 15% 18%;
+    --card-highlight: 30 15% 22%;
+    --card-shadow: 30 10% 5% / 0.15;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-medium tracking-tight;
+  }
+
+  h1 {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  h2 {
+    @apply text-xl sm:text-2xl;
+  }
+
+  h3 {
+    @apply text-lg sm:text-xl;
+  }
+}
+
+/* Component styles */
+@layer components {
+  .app-container {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .app-header {
+    @apply sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur-sm transition-all;
+  }
+
+  .app-card {
+    @apply rounded-xl border bg-card shadow-sm transition-all hover:shadow-md;
+  }
+
+  .app-button-primary {
+    @apply rounded-lg bg-primary px-4 py-2 text-primary-foreground shadow-sm hover:bg-primary-hover transition-colors;
+  }
+
+  .app-button-secondary {
+    @apply rounded-lg bg-secondary px-4 py-2 text-secondary-foreground shadow-sm hover:bg-secondary-hover transition-colors;
+  }
+
+  .app-button-outline {
+    @apply rounded-lg border border-input bg-background px-4 py-2 hover:bg-muted transition-colors;
+  }
+
+  .app-input {
+    @apply rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+  }
+
+  .app-badge {
+    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors;
+  }
+
+  .app-tabs {
+    @apply relative w-full overflow-hidden rounded-lg;
+  }
+
+  .app-tabs-list {
+    @apply inline-flex h-10 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground;
+  }
+
+  .app-tabs-trigger {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm;
+  }
+}
+
+/* Animations */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-in-out;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-in-out;
+  }
+
+  .animate-scale {
+    animation: scale 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+/* Custom scrollbar */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-muted rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full hover:bg-muted-foreground transition-colors;
+  }
+}
+
+/* App-specific styles */
+.bg-sky-50 {
+  background-color: hsl(var(--app-background));
+}
+
+.bg-sky-100 {
+  background-color: hsl(var(--header-background));
+}
+
+.bg-white {
+  @apply bg-card;
+}
+
+.text-primary-600,
+.text-primary-700,
+.text-primary-800 {
+  color: hsl(var(--primary));
+}
+
+.bg-primary-600,
+.hover\:bg-primary-700:hover {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.border-primary-600 {
+  border-color: hsl(var(--primary));
+}
+
+.bg-accent-400,
+.bg-accent-600 {
+  background-color: hsl(var(--accent));
+}
+
+.text-muted-foreground {
+  color: hsl(var(--muted-foreground));
+}
+
+.bg-sky-200,
+.bg-sky-400,
+.bg-sky-600 {
+  background-color: hsl(var(--primary) / var(--tw-bg-opacity));
+}
+
+.bg-sky-200 {
+  --tw-bg-opacity: 0.3;
+}
+
+.bg-sky-400 {
+  --tw-bg-opacity: 0.6;
+}
+
+.bg-sky-600 {
+  --tw-bg-opacity: 0.9;
+}
