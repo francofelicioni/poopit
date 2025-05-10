@@ -203,30 +203,30 @@ export function FoodPoopTimeline({ dateRange, filters }: FoodPoopTimelineProps) 
   }
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <EmojiIcon emoji="🔄" label="correlation" size="md" withBackground />
-            <CardTitle>Food & Poop Correlation</CardTitle>
-          </div>
-          <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "timeline" | "table")}>
-            <TabsList className="grid w-[180px] grid-cols-2">
-              <TabsTrigger value="timeline">Timeline</TabsTrigger>
-              <TabsTrigger value="table">Table</TabsTrigger>
-            </TabsList>
-          </Tabs>
+   <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "timeline" | "table")}>
+  <Card>
+    <CardHeader className="pb-2">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <EmojiIcon emoji="🔄" label="correlation" size="md" withBackground />
+          <CardTitle>Food & Poop Correlation</CardTitle>
         </div>
-      </CardHeader>
-      <CardContent>
-        {filteredData.length === 0 ? (
-          <EmptyStateMascot
-            title="No data found"
-            description="Try adjusting your filters or date range to see food and poop correlations."
-            mood="neutral"
-            action={<Button onClick={() => window.location.reload()}>Reset Filters</Button>}
-          />
-        ) : (
+        <TabsList className="grid w-[180px] grid-cols-2">
+          <TabsTrigger value="timeline">Timeline</TabsTrigger>
+          <TabsTrigger value="table">Table</TabsTrigger>
+        </TabsList>
+      </div>
+    </CardHeader>
+    <CardContent>
+      {filteredData.length === 0 ? (
+        <EmptyStateMascot
+          title="No data found"
+          description="Try adjusting your filters or date range to see food and poop correlations."
+          mood="neutral"
+          action={<Button onClick={() => window.location.reload()}>Reset Filters</Button>}
+        />
+      ) : (
+        <>
           <TabsContent value="timeline" className="mt-0">
             <TabsList>
             <div className="space-y-6">
@@ -348,9 +348,8 @@ export function FoodPoopTimeline({ dateRange, filters }: FoodPoopTimelineProps) 
             </div>
             </TabsList>
           </TabsContent>
-        )}
 
-        <TabsContent value="table" className="mt-0">
+          <TabsContent value="table" className="mt-0">
           <TabsList>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
@@ -460,7 +459,11 @@ export function FoodPoopTimeline({ dateRange, filters }: FoodPoopTimelineProps) 
           </div>
           </TabsList>
         </TabsContent>
-      </CardContent>
-    </Card>
+        </>
+      )}
+    </CardContent>
+  </Card>
+</Tabs>
+
   )
 }
