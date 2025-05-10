@@ -228,6 +228,7 @@ export function FoodPoopTimeline({ dateRange, filters }: FoodPoopTimelineProps) 
           />
         ) : (
           <TabsContent value="timeline" className="mt-0">
+            <TabsList>
             <div className="space-y-6">
               {Object.entries(groupedByDate).map(([dateStr, entries]) => (
                 <div key={dateStr} className="border-b pb-4 last:border-b-0">
@@ -345,10 +346,12 @@ export function FoodPoopTimeline({ dateRange, filters }: FoodPoopTimelineProps) 
                 </div>
               ))}
             </div>
+            </TabsList>
           </TabsContent>
         )}
 
         <TabsContent value="table" className="mt-0">
+          <TabsList>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
@@ -455,6 +458,7 @@ export function FoodPoopTimeline({ dateRange, filters }: FoodPoopTimelineProps) 
               </tbody>
             </table>
           </div>
+          </TabsList>
         </TabsContent>
       </CardContent>
     </Card>

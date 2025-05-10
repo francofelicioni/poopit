@@ -39,27 +39,30 @@ export function StatsOverview() {
         </TabsList>
 
         <TabsContent value="frequency" className="pt-4">
-          <Card>
-            <CardContent className="pt-6">
-              <h3 className="mb-4 text-center font-medium">Weekly Frequency</h3>
-              <div className="h-[200px] w-full">
-                <BarChart data={weeklyData} />
-              </div>
-              <div className="mt-4 grid grid-cols-2 gap-4">
-                <div className="rounded-lg bg-sky-100 p-3 text-center">
-                  <p className="text-sm text-muted-foreground">Daily Average</p>
-                  <p className="text-2xl font-bold text-primary-600">1.1</p>
+          <TabsList>
+            <Card>
+              <CardContent className="pt-6">
+                <h3 className="mb-4 text-center font-medium">Weekly Frequency</h3>
+                <div className="h-[200px] w-full">
+                  <BarChart data={weeklyData} />
                 </div>
-                <div className="rounded-lg bg-sky-100 p-3 text-center">
-                  <p className="text-sm text-muted-foreground">Weekly Total</p>
-                  <p className="text-2xl font-bold text-primary-600">8</p>
+                <div className="mt-4 grid grid-cols-2 gap-4">
+                  <div className="rounded-lg bg-sky-100 p-3 text-center">
+                    <p className="text-sm text-muted-foreground">Daily Average</p>
+                    <p className="text-2xl font-bold text-primary-600">1.1</p>
+                  </div>
+                  <div className="rounded-lg bg-sky-100 p-3 text-center">
+                    <p className="text-sm text-muted-foreground">Weekly Total</p>
+                    <p className="text-2xl font-bold text-primary-600">8</p>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </TabsList>
         </TabsContent>
 
         <TabsContent value="consistency" className="pt-4">
+        <TabsList>
           <Card>
             <CardContent className="pt-6">
               <h3 className="mb-4 text-center font-medium">Consistency Distribution</h3>
@@ -75,9 +78,11 @@ export function StatsOverview() {
               </div>
             </CardContent>
           </Card>
+          </TabsList>
         </TabsContent>
 
         <TabsContent value="color" className="pt-4">
+        <TabsList>
           <Card>
             <CardContent className="pt-6">
               <h3 className="mb-4 text-center font-medium">Color Distribution</h3>
@@ -93,6 +98,7 @@ export function StatsOverview() {
               </div>
             </CardContent>
           </Card>
+          </TabsList>
         </TabsContent>
       </Tabs>
 
