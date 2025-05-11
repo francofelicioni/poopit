@@ -81,7 +81,8 @@ export function CalendarView() {
     .filter((date): date is Date => date !== null)
 
   const renderDay = (day: Date, selectedDay: Date | undefined, dayProps: React.HTMLAttributes<HTMLDivElement>) => {
-    if (!day || isNaN(day.getTime())) {
+    const safeDay = day instanceof Date ? day : new Date(day)
+    if (!day || isNaN(safeDay.getTime())) {
       return <div {...dayProps}>Invalid</div>
     }
 
