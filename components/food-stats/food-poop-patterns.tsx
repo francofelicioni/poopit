@@ -1,5 +1,3 @@
-"use client"
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { EmojiIcon } from "@/components/ui/emoji-icon"
 import { Badge } from "@/components/ui/badge"
@@ -9,112 +7,64 @@ export function FoodPoopPatterns() {
     <Card>
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2">
-          <EmojiIcon emoji="🔍" label="patterns" size="md" withBackground />
-          <CardTitle>Detected Patterns</CardTitle>
+          <EmojiIcon emoji="🔄" label="patterns" size="md" withBackground />
+          <CardTitle>Common Patterns</CardTitle>
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <EmojiIcon emoji="☕" label="coffee" size="sm" />
-              <span className="font-medium">Coffee</span>
-            </div>
-            <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
-              High Impact
-            </Badge>
-          </div>
-          <div className="pl-6 space-y-1 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Response Time:</span>
-              <span className="font-medium">30-60 minutes</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Consistency Effect:</span>
-              <span className="font-medium">Looser</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Comfort Impact:</span>
-              <span className="font-medium">Moderate</span>
+          <div>
+            <h3 className="text-sm font-medium mb-2">Foods to Watch</h3>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="outline" className="bg-red-100 text-red-800 border-red-200">
+                Spicy Food 🌶️
+              </Badge>
+              <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-200">
+                Dairy 🥛
+              </Badge>
+              <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-200">
+                Coffee ☕
+              </Badge>
+              <Badge variant="outline" className="bg-amber-100 text-amber-800 border-amber-200">
+                Alcohol 🍺
+              </Badge>
             </div>
           </div>
 
-          <div className="border-t pt-4"></div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <EmojiIcon emoji="🌶️" label="spicy" size="sm" />
-              <span className="font-medium">Spicy Food</span>
-            </div>
-            <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">
-              High Impact
-            </Badge>
-          </div>
-          <div className="pl-6 space-y-1 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Response Time:</span>
-              <span className="font-medium">12-24 hours</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Consistency Effect:</span>
-              <span className="font-medium">Much Looser</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Comfort Impact:</span>
-              <span className="font-medium">Significant</span>
+          <div>
+            <h3 className="text-sm font-medium mb-2">Beneficial Foods</h3>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
+                Fiber 🥦
+              </Badge>
+              <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
+                Yogurt 🥄
+              </Badge>
+              <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
+                Fruits 🍎
+              </Badge>
+              <Badge variant="outline" className="bg-green-100 text-green-800 border-green-200">
+                Water 💧
+              </Badge>
             </div>
           </div>
 
-          <div className="border-t pt-4"></div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <EmojiIcon emoji="🥛" label="dairy" size="sm" />
-              <span className="font-medium">Dairy</span>
-            </div>
-            <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">
-              Medium Impact
-            </Badge>
-          </div>
-          <div className="pl-6 space-y-1 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Response Time:</span>
-              <span className="font-medium">6-12 hours</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Consistency Effect:</span>
-              <span className="font-medium">Harder</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Comfort Impact:</span>
-              <span className="font-medium">Moderate</span>
-            </div>
-          </div>
-
-          <div className="border-t pt-4"></div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <EmojiIcon emoji="🥦" label="fiber" size="sm" />
-              <span className="font-medium">Fiber</span>
-            </div>
-            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-              Positive Impact
-            </Badge>
-          </div>
-          <div className="pl-6 space-y-1 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Response Time:</span>
-              <span className="font-medium">24-48 hours</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Consistency Effect:</span>
-              <span className="font-medium">More Normal</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Comfort Impact:</span>
-              <span className="font-medium">Improved</span>
-            </div>
+          <div>
+            <h3 className="text-sm font-medium mb-2">Time Patterns</h3>
+            <ul className="space-y-2 text-sm">
+              <li className="flex items-center justify-between">
+                <span>Morning (6-9 AM)</span>
+                <Badge>Most Regular</Badge>
+              </li>
+              <li className="flex items-center justify-between">
+                <span>After Meals</span>
+                <Badge>Common Trigger</Badge>
+              </li>
+              <li className="flex items-center justify-between">
+                <span>Late Evening</span>
+                <Badge>Least Common</Badge>
+              </li>
+            </ul>
           </div>
         </div>
       </CardContent>

@@ -1,8 +1,5 @@
-"use client"
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { EmojiIcon } from "@/components/ui/emoji-icon"
-import { LightbulbIcon, AlertTriangle } from "lucide-react"
 
 export function FoodPoopInsights() {
   return (
@@ -10,51 +7,42 @@ export function FoodPoopInsights() {
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2">
           <EmojiIcon emoji="💡" label="insights" size="md" withBackground />
-          <CardTitle>Food Insights</CardTitle>
+          <CardTitle>Quick Insights</CardTitle>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          <div className="rounded-lg bg-sky-50 p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <LightbulbIcon className="h-4 w-4 text-amber-500" />
-              <p className="font-medium">Coffee Effect</p>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Coffee appears to trigger bathroom visits within 30-60 minutes of consumption for you.
+        <ul className="space-y-3">
+          <li className="flex items-start gap-2">
+            <span className="text-primary mt-0.5">•</span>
+            <p className="text-sm">
+              <span className="font-medium">Spicy foods</span> tend to result in looser stools within 24 hours
             </p>
-          </div>
-
-          <div className="rounded-lg bg-sky-50 p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <AlertTriangle className="h-4 w-4 text-red-500" />
-              <p className="font-medium">Spicy Food Warning</p>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Spicy foods consistently lead to loose stools and lower comfort ratings the following day.
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-primary mt-0.5">•</span>
+            <p className="text-sm">
+              <span className="font-medium">Coffee</span> typically triggers bathroom visits within 30-60 minutes
             </p>
-          </div>
-
-          <div className="rounded-lg bg-sky-50 p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <LightbulbIcon className="h-4 w-4 text-amber-500" />
-              <p className="font-medium">Dairy Sensitivity</p>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Dairy consumption appears to correlate with harder stools and moderate discomfort.
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-primary mt-0.5">•</span>
+            <p className="text-sm">
+              <span className="font-medium">Dairy products</span> may be causing discomfort and harder stools
             </p>
-          </div>
-
-          <div className="rounded-lg bg-green-50 p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <EmojiIcon emoji="✅" label="good" size="sm" />
-              <p className="font-medium">Fiber Benefits</p>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Days with higher fiber intake show improved consistency and comfort levels.
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-primary mt-0.5">•</span>
+            <p className="text-sm">
+              <span className="font-medium">High-fiber foods</span> are associated with your most comfortable visits
             </p>
-          </div>
-        </div>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-primary mt-0.5">•</span>
+            <p className="text-sm">
+              <span className="font-medium">Morning visits</span> (6-9 AM) tend to be more regular and comfortable
+            </p>
+          </li>
+        </ul>
       </CardContent>
     </Card>
   )

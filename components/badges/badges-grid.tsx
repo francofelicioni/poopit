@@ -56,7 +56,7 @@ export function BadgesGrid({ badges, showProgress = true, showShare = true, newB
             <TabsTrigger value="special">Special</TabsTrigger>
           </TabsList>
 
-          {/* Move TabsContent inside the Tabs component */}
+          {/* TabsContent must be inside Tabs component */}
           <TabsContent value={activeTab} className="mt-4">
             {sortedBadges.length === 0 ? (
               <EmptyStateMascot

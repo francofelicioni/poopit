@@ -1,21 +1,26 @@
 import type React from "react"
-import { cn } from "@/lib/utils"
-
 interface SectionHeaderProps {
   title: string
   description?: string
+  icon?: string
   children?: React.ReactNode
-  className?: string
 }
 
-export function SectionHeader({ title, description, children, className }: SectionHeaderProps) {
+export function SectionHeader({ title, description, icon, children }: SectionHeaderProps) {
   return (
-    <div className={cn("mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between", className)}>
-      <div>
-        <h2 className="text-2xl font-bold">{title}</h2>
-        {description && <p className="mt-1 text-muted-foreground">{description}</p>}
+    <div className="mb-6 flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        {icon && (
+          <span className="text-2xl" role="img" aria-label={title}>
+            {icon}
+          </span>
+        )}
+        <div>
+          <h2 className="text-2xl font-bold">{title}</h2>
+          {description && <p className="text-muted-foreground">{description}</p>}
+        </div>
       </div>
-      {children && <div className="mt-4 sm:mt-0">{children}</div>}
+      {children && <div>{children}</div>}
     </div>
   )
 }

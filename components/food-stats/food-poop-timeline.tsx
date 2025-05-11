@@ -203,267 +203,262 @@ export function FoodPoopTimeline({ dateRange, filters }: FoodPoopTimelineProps) 
   }
 
   return (
-   <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "timeline" | "table")}>
-  <Card>
-    <CardHeader className="pb-2">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <EmojiIcon emoji="🔄" label="correlation" size="md" withBackground />
-          <CardTitle>Food & Poop Correlation</CardTitle>
+    <Card>
+      <CardHeader className="pb-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <EmojiIcon emoji="🔄" label="correlation" size="md" withBackground />
+            <CardTitle>Food & Poop Correlation</CardTitle>
+          </div>
+          <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "timeline" | "table")}>
+            <TabsList className="grid w-[180px] grid-cols-2">
+              <TabsTrigger value="timeline">Timeline</TabsTrigger>
+              <TabsTrigger value="table">Table</TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
-        <TabsList className="grid w-[180px] grid-cols-2">
-          <TabsTrigger value="timeline">Timeline</TabsTrigger>
-          <TabsTrigger value="table">Table</TabsTrigger>
-        </TabsList>
-      </div>
-    </CardHeader>
-    <CardContent>
-      {filteredData.length === 0 ? (
-        <EmptyStateMascot
-          title="No data found"
-          description="Try adjusting your filters or date range to see food and poop correlations."
-          mood="neutral"
-          action={<Button onClick={() => window.location.reload()}>Reset Filters</Button>}
-        />
-      ) : (
-        <>
-          <TabsContent value="timeline" className="mt-0">
-            <TabsList>
-            <div className="space-y-6">
-              {Object.entries(groupedByDate).map(([dateStr, entries]) => (
-                <div key={dateStr} className="border-b pb-4 last:border-b-0">
-                  <h3 className="font-medium mb-2 flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                    {formatDate(new Date(dateStr))}
-                  </h3>
+      </CardHeader>
+      <CardContent>
+        {filteredData.length === 0 ? (
+          <EmptyStateMascot
+            title="No data found"
+            description="Try adjusting your filters or date range to see food and poop correlations."
+            mood="neutral"
+            action={<Button onClick={() => window.location.reload()}>Reset Filters</Button>}
+          />
+        ) : (
+          <Tabs value={viewMode}>
+            <TabsContent value="timeline" className="mt-0">
+              <div className="space-y-6">
+                {Object.entries(groupedByDate).map(([dateStr, entries]) => (
+                  <div key={dateStr} className="border-b pb-4 last:border-b-0">
+                    <h3 className="font-medium mb-2 flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      {formatDate(new Date(dateStr))}
+                    </h3>
 
-                  <div className="space-y-3">
-                    {entries.map((entry, index) => (
-                      <div key={`${dateStr}-${index}`} className="pl-6">
-                        {entry.type === "food" ? (
-                          <div className="flex items-start">
-                            <div className="w-20 text-sm text-muted-foreground pt-1">
-                              {(entry as any).items[0].time}
-                            </div>
-                            <div className="flex-1">
-                              <h4 className="font-medium text-sm">Food Consumed</h4>
-                              <div className="flex flex-wrap gap-2 mt-1">
-                                {(entry as any).items.map((item: any, i: number) => (
-                                  <div
-                                    key={`${dateStr}-${index}-${i}`}
-                                    className="inline-flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-full text-xs"
-                                  >
-                                    <span>{item.emoji}</span>
-                                    <span>{item.name}</span>
-                                  </div>
-                                ))}
+                    <div className="space-y-3">
+                      {entries.map((entry, index) => (
+                        <div key={`${dateStr}-${index}`} className="pl-6">
+                          {entry.type === "food" ? (
+                            <div className="flex items-start">
+                              <div className="w-20 text-sm text-muted-foreground pt-1">
+                                {(entry as any).items[0].time}
                               </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="flex items-start">
-                            <div className="w-20 text-sm text-muted-foreground pt-1">{(entry as any).time}</div>
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2">
-                                <h4 className="font-medium text-sm">Bathroom Visit</h4>
-                                <TooltipProvider>
-                                  <Tooltip>
-                                    <TooltipTrigger asChild>
-                                      <Button variant="ghost" size="icon" className="h-5 w-5 text-muted-foreground">
-                                        <Info className="h-3 w-3" />
-                                      </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                      <p className="text-xs">
-                                        This visit may be related to food consumed 1-2 days prior
-                                      </p>
-                                    </TooltipContent>
-                                  </Tooltip>
-                                </TooltipProvider>
-                              </div>
-
-                              <div className="flex flex-wrap gap-4 mt-2">
-                                <div className="flex items-center gap-1">
-                                  <EmojiIcon
-                                    emoji={getConsistencyEmoji((entry as any).consistency)}
-                                    label={(entry as any).consistency}
-                                    size="sm"
-                                  />
-                                  <span className="text-sm capitalize">{(entry as any).consistency}</span>
-                                </div>
-
-                                <div className="flex items-center gap-1">
-                                  <div
-                                    className="h-4 w-4 rounded-full"
-                                    style={{ backgroundColor: getColorDisplay((entry as any).color).color }}
-                                  ></div>
-                                  <span className="text-sm">{getColorDisplay((entry as any).color).name}</span>
-                                </div>
-
-                                <div className="flex items-center gap-1">
-                                  <span className="text-sm">Comfort:</span>
-                                  <div className="flex">
-                                    {Array(5)
-                                      .fill(0)
-                                      .map((_, i) => (
-                                        <span
-                                          key={`star-${i}`}
-                                          className={i < (entry as any).comfort ? "text-yellow-500" : "text-gray-300"}
-                                        >
-                                          ★
-                                        </span>
-                                      ))}
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div className="mt-3">
-                                <div className="text-sm font-medium flex items-center gap-1">
-                                  <ArrowRight className="h-3 w-3" />
-                                  <span>Likely caused by:</span>
-                                </div>
+                              <div className="flex-1">
+                                <h4 className="font-medium text-sm">Food Consumed</h4>
                                 <div className="flex flex-wrap gap-2 mt-1">
-                                  {(entry as any).relatedFoods.map((food: any, i: number) => (
+                                  {(entry as any).items.map((item: any, i: number) => (
                                     <div
-                                      key={`${dateStr}-${index}-food-${i}`}
-                                      className={`inline-flex items-center gap-1 border px-2 py-1 rounded-full text-xs ${getImpactColor(
-                                        food.impact,
-                                      )}`}
+                                      key={`${dateStr}-${index}-${i}`}
+                                      className="inline-flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-full text-xs"
                                     >
-                                      <span>{food.emoji}</span>
-                                      <span>{food.name}</span>
-                                      <span className="text-[10px] opacity-80">({food.impact} impact)</span>
+                                      <span>{item.emoji}</span>
+                                      <span>{item.name}</span>
                                     </div>
                                   ))}
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                          ) : (
+                            <div className="flex items-start">
+                              <div className="w-20 text-sm text-muted-foreground pt-1">{(entry as any).time}</div>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <h4 className="font-medium text-sm">Bathroom Visit</h4>
+                                  <TooltipProvider>
+                                    <Tooltip>
+                                      <TooltipTrigger asChild>
+                                        <Button variant="ghost" size="icon" className="h-5 w-5 text-muted-foreground">
+                                          <Info className="h-3 w-3" />
+                                        </Button>
+                                      </TooltipTrigger>
+                                      <TooltipContent>
+                                        <p className="text-xs">
+                                          This visit may be related to food consumed 1-2 days prior
+                                        </p>
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                </div>
+
+                                <div className="flex flex-wrap gap-4 mt-2">
+                                  <div className="flex items-center gap-1">
+                                    <EmojiIcon
+                                      emoji={getConsistencyEmoji((entry as any).consistency)}
+                                      label={(entry as any).consistency}
+                                      size="sm"
+                                    />
+                                    <span className="text-sm capitalize">{(entry as any).consistency}</span>
+                                  </div>
+
+                                  <div className="flex items-center gap-1">
+                                    <div
+                                      className="h-4 w-4 rounded-full"
+                                      style={{ backgroundColor: getColorDisplay((entry as any).color).color }}
+                                    ></div>
+                                    <span className="text-sm">{getColorDisplay((entry as any).color).name}</span>
+                                  </div>
+
+                                  <div className="flex items-center gap-1">
+                                    <span className="text-sm">Comfort:</span>
+                                    <div className="flex">
+                                      {Array(5)
+                                        .fill(0)
+                                        .map((_, i) => (
+                                          <span
+                                            key={`star-${i}`}
+                                            className={i < (entry as any).comfort ? "text-yellow-500" : "text-gray-300"}
+                                          >
+                                            ★
+                                          </span>
+                                        ))}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="mt-3">
+                                  <div className="text-sm font-medium flex items-center gap-1">
+                                    <ArrowRight className="h-3 w-3" />
+                                    <span>Likely caused by:</span>
+                                  </div>
+                                  <div className="flex flex-wrap gap-2 mt-1">
+                                    {(entry as any).relatedFoods.map((food: any, i: number) => (
+                                      <div
+                                        key={`${dateStr}-${index}-food-${i}`}
+                                        className={`inline-flex items-center gap-1 border px-2 py-1 rounded-full text-xs ${getImpactColor(
+                                          food.impact,
+                                        )}`}
+                                      >
+                                        <span>{food.emoji}</span>
+                                        <span>{food.name}</span>
+                                        <span className="text-[10px] opacity-80">({food.impact} impact)</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-            </TabsList>
-          </TabsContent>
-
-          <TabsContent value="table" className="mt-0">
-          <TabsList>
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2 px-3 font-medium">Date</th>
-                  <th className="text-left py-2 px-3 font-medium">Type</th>
-                  <th className="text-left py-2 px-3 font-medium">Details</th>
-                  <th className="text-left py-2 px-3 font-medium">Related Items</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.map((entry, index) => (
-                  <tr key={index} className="border-b last:border-b-0 hover:bg-muted/20">
-                    <td className="py-2 px-3 align-top">
-                      <div className="font-medium">{formatDate(entry.date)}</div>
-                      <div className="text-xs text-muted-foreground">
-                        {entry.type === "food" ? (entry as any).items[0].time : (entry as any).time}
-                      </div>
-                    </td>
-                    <td className="py-2 px-3 align-top">
-                      {entry.type === "food" ? (
-                        <div className="inline-flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-full text-xs">
-                          <EmojiIcon emoji="🍽️" label="food" size="xs" />
-                          <span>Food</span>
-                        </div>
-                      ) : (
-                        <div className="inline-flex items-center gap-1 bg-accent/10 px-2 py-1 rounded-full text-xs">
-                          <EmojiIcon emoji="🚽" label="poop" size="xs" />
-                          <span>Poop</span>
-                        </div>
-                      )}
-                    </td>
-                    <td className="py-2 px-3 align-top">
-                      {entry.type === "food" ? (
-                        <div className="flex flex-wrap gap-1">
-                          {(entry as any).items.map((item: any, i: number) => (
-                            <div
-                              key={`item-${index}-${i}`}
-                              className="inline-flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-full text-xs"
-                            >
-                              <span>{item.emoji}</span>
-                              <span>{item.name}</span>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-1">
-                            <EmojiIcon
-                              emoji={getConsistencyEmoji((entry as any).consistency)}
-                              label={(entry as any).consistency}
-                              size="xs"
-                            />
-                            <span className="text-xs capitalize">{(entry as any).consistency}</span>
-                          </div>
-
-                          <div className="flex items-center gap-1">
-                            <div
-                              className="h-3 w-3 rounded-full"
-                              style={{ backgroundColor: getColorDisplay((entry as any).color).color }}
-                            ></div>
-                            <span className="text-xs">{getColorDisplay((entry as any).color).name}</span>
-                          </div>
-
-                          <div className="flex items-center gap-1">
-                            <span className="text-xs">Comfort:</span>
-                            <div className="flex">
-                              {Array(5)
-                                .fill(0)
-                                .map((_, i) => (
-                                  <span
-                                    key={`table-star-${index}-${i}`}
-                                    className={`text-xs ${i < (entry as any).comfort ? "text-yellow-500" : "text-gray-300"}`}
-                                  >
-                                    ★
-                                  </span>
-                                ))}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </td>
-                    <td className="py-2 px-3 align-top">
-                      {entry.type === "poop" ? (
-                        <div className="flex flex-wrap gap-1">
-                          {(entry as any).relatedFoods.map((food: any, i: number) => (
-                            <div
-                              key={`related-${index}-${i}`}
-                              className={`inline-flex items-center gap-1 border px-2 py-1 rounded-full text-xs ${getImpactColor(
-                                food.impact,
-                              )}`}
-                            >
-                              <span>{food.emoji}</span>
-                              <span>{food.name}</span>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <span className="text-xs text-muted-foreground">-</span>
-                      )}
-                    </td>
-                  </tr>
                 ))}
-              </tbody>
-            </table>
-          </div>
-          </TabsList>
-        </TabsContent>
-        </>
-      )}
-    </CardContent>
-  </Card>
-</Tabs>
+              </div>
+            </TabsContent>
 
+            <TabsContent value="table" className="mt-0">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left py-2 px-3 font-medium">Date</th>
+                      <th className="text-left py-2 px-3 font-medium">Type</th>
+                      <th className="text-left py-2 px-3 font-medium">Details</th>
+                      <th className="text-left py-2 px-3 font-medium">Related Items</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredData.map((entry, index) => (
+                      <tr key={index} className="border-b last:border-b-0 hover:bg-muted/20">
+                        <td className="py-2 px-3 align-top">
+                          <div className="font-medium">{formatDate(entry.date)}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {entry.type === "food" ? (entry as any).items[0].time : (entry as any).time}
+                          </div>
+                        </td>
+                        <td className="py-2 px-3 align-top">
+                          {entry.type === "food" ? (
+                            <div className="inline-flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-full text-xs">
+                              <EmojiIcon emoji="🍽️" label="food" size="xs" />
+                              <span>Food</span>
+                            </div>
+                          ) : (
+                            <div className="inline-flex items-center gap-1 bg-accent/10 px-2 py-1 rounded-full text-xs">
+                              <EmojiIcon emoji="🚽" label="poop" size="xs" />
+                              <span>Poop</span>
+                            </div>
+                          )}
+                        </td>
+                        <td className="py-2 px-3 align-top">
+                          {entry.type === "food" ? (
+                            <div className="flex flex-wrap gap-1">
+                              {(entry as any).items.map((item: any, i: number) => (
+                                <div
+                                  key={`item-${index}-${i}`}
+                                  className="inline-flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-full text-xs"
+                                >
+                                  <span>{item.emoji}</span>
+                                  <span>{item.name}</span>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="space-y-1">
+                              <div className="flex items-center gap-1">
+                                <EmojiIcon
+                                  emoji={getConsistencyEmoji((entry as any).consistency)}
+                                  label={(entry as any).consistency}
+                                  size="xs"
+                                />
+                                <span className="text-xs capitalize">{(entry as any).consistency}</span>
+                              </div>
+
+                              <div className="flex items-center gap-1">
+                                <div
+                                  className="h-3 w-3 rounded-full"
+                                  style={{ backgroundColor: getColorDisplay((entry as any).color).color }}
+                                ></div>
+                                <span className="text-xs">{getColorDisplay((entry as any).color).name}</span>
+                              </div>
+
+                              <div className="flex items-center gap-1">
+                                <span className="text-xs">Comfort:</span>
+                                <div className="flex">
+                                  {Array(5)
+                                    .fill(0)
+                                    .map((_, i) => (
+                                      <span
+                                        key={`table-star-${index}-${i}`}
+                                        className={`text-xs ${i < (entry as any).comfort ? "text-yellow-500" : "text-gray-300"}`}
+                                      >
+                                        ★
+                                      </span>
+                                    ))}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </td>
+                        <td className="py-2 px-3 align-top">
+                          {entry.type === "poop" ? (
+                            <div className="flex flex-wrap gap-1">
+                              {(entry as any).relatedFoods.map((food: any, i: number) => (
+                                <div
+                                  key={`related-${index}-${i}`}
+                                  className={`inline-flex items-center gap-1 border px-2 py-1 rounded-full text-xs ${getImpactColor(
+                                    food.impact,
+                                  )}`}
+                                >
+                                  <span>{food.emoji}</span>
+                                  <span>{food.name}</span>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">-</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </TabsContent>
+          </Tabs>
+        )}
+      </CardContent>
+    </Card>
   )
 }

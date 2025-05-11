@@ -1,13 +1,19 @@
 "use client"
 
-import { useState } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { EmojiIcon } from "@/components/ui/emoji-icon"
-import { PoopMascot } from "@/components/mascot/poop-mascot"
-import { Copy, Facebook, Twitter, LinkIcon } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { Badge } from "@/components/ui/badge"
+import { Copy, Twitter, Facebook, Linkedin } from "lucide-react"
 import type { BadgeData } from "./badge-card"
+import { useState } from "react"
 
 interface ShareBadgeDialogProps {
   open: boolean
@@ -16,88 +22,68 @@ interface ShareBadgeDialogProps {
 }
 
 export function ShareBadgeDialog({ open, onOpenChange, badge }: ShareBadgeDialogProps) {
-  const { toast } = useToast()
   const [copied, setCopied] = useState(false)
 
-  const shareText = `I just earned the "${badge.name}" badge on PoopIt! ${badge.description} #PoopIt #DigestionGoals`
+  const shareText = `I just earned the "${badge.name}" badge on PoopIt! ${badge.description}`
 
-  const handleCopy = () => {
+  const copyToClipboard = () => {
     navigator.clipboard.writeText(shareText)
     setCopied(true)
-    toast({
-      title: "Copied to clipboard",
-      description: "Share text has been copied to your clipboard",
-    })
     setTimeout(() => setCopied(false), 2000)
-  }
-
-  const handleShare = (platform: string) => {
-    let url = ""
-    const encodedText = encodeURIComponent(shareText)
-
-    switch (platform) {
-      case "twitter":
-        url = `https://twitter.com/intent/tweet?text=${encodedText}`
-        break
-      case "facebook":
-        url = `https://www.facebook.com/sharer/sharer.php?u=https://poopit.app&quote=${encodedText}`
-        break
-      default:
-        return
-    }
-
-    window.open(url, "_blank", "width=600,height=400")
-    onOpenChange(false)
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <EmojiIcon emoji={badge.emoji} label={badge.name} size="md" />
-            Share "{badge.name}" Badge
-          </DialogTitle>
-          <DialogDescription>
-            Let your friends know about your digestive achievements! Don't worry, we'll keep it anonymous.
-          </DialogDescription>
+          <DialogTitle>Share Badge</DialogTitle>
+          <DialogDescription>Share your achievement with friends and family</DialogDescription>
         </DialogHeader>
 
-        <div className="flex justify-center py-4">
-          <div className="relative bg-primary/5 rounded-lg p-6 max-w-xs text-center">
-            <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
-              <PoopMascot mood="proud" size="md" />
+        <div className="flex flex-col items-center justify-center py-4">
+          <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary/20">
+            <EmojiIcon emoji={badge.emoji} label={badge.name} size="xl" />
+          </div>
+
+          <h3 className="text-xl font-bold">{badge.name}</h3>
+          <p className="mt-1 text-center text-sm text-muted-foreground">{badge.description}</p>
+
+          <Badge variant="outline" className="mt-2">
+            {badge.requirement}
+          </Badge>
+        </div>
+
+        <div className="flex flex-col space-y-3">
+          <div className="flex items-center space-x-2">
+            <div className="grid flex-1 gap-2">
+              <div className="flex items-center justify-between rounded-md border px-3 py-2">
+                <span className="text-sm text-muted-foreground truncate">{shareText}</span>
+                <Button variant="ghost" size="icon" onClick={copyToClipboard}>
+                  <Copy className="h-4 w-4" />
+                </Button>
+              </div>
+              {copied && <p className="text-xs text-green-600">Copied to clipboard!</p>}
             </div>
-            <div className="mt-8">
-              <EmojiIcon emoji={badge.emoji} label={badge.name} size="xl" withBackground />
-              <h3 className="mt-2 font-bold text-lg">{badge.name}</h3>
-              <p className="text-sm text-muted-foreground mt-1">{badge.description}</p>
-            </div>
+          </div>
+
+          <div className="flex justify-center space-x-2">
+            <Button variant="outline" size="icon" className="h-9 w-9">
+              <Twitter className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="icon" className="h-9 w-9">
+              <Facebook className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="icon" className="h-9 w-9">
+              <Linkedin className="h-4 w-4" />
+            </Button>
           </div>
         </div>
 
-        <div className="border rounded-md p-3">
-          <p className="text-sm">{shareText}</p>
-          <Button variant="outline" size="sm" className="mt-2 w-full" onClick={handleCopy}>
-            <Copy className="mr-2 h-4 w-4" />
-            {copied ? "Copied!" : "Copy Text"}
+        <DialogFooter className="sm:justify-center">
+          <Button variant="secondary" onClick={() => onOpenChange(false)}>
+            Close
           </Button>
-        </div>
-
-        <div className="flex flex-col gap-2 sm:flex-row">
-          <Button className="flex-1 bg-[#1DA1F2] hover:bg-[#1a94df]" onClick={() => handleShare("twitter")}>
-            <Twitter className="mr-2 h-4 w-4" />
-            Twitter
-          </Button>
-          <Button className="flex-1 bg-[#4267B2] hover:bg-[#3b5998]" onClick={() => handleShare("facebook")}>
-            <Facebook className="mr-2 h-4 w-4" />
-            Facebook
-          </Button>
-          <Button variant="outline" className="flex-1" onClick={handleCopy}>
-            <LinkIcon className="mr-2 h-4 w-4" />
-            Copy Link
-          </Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
