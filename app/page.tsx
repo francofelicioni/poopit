@@ -50,7 +50,7 @@ export default function HomePage() {
                   </p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Button variant="default" className="justify-start w-fit">
                     View Calendar
                   </Button>
                 </CardFooter>
@@ -72,7 +72,7 @@ export default function HomePage() {
                   </p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Button variant="default" className="justify-start w-fit">
                     View Food Stats
                   </Button>
                 </CardFooter>
@@ -94,7 +94,7 @@ export default function HomePage() {
                   </p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Button variant="default" className="justify-start w-fit">
                     View Badges
                   </Button>
                 </CardFooter>

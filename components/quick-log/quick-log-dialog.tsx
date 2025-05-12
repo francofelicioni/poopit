@@ -50,26 +50,13 @@ export function QuickLogDialog({ open, onOpenChange }: QuickLogDialogProps) {
       )}
 
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-center text-xl">Quick Log Your Visit</DialogTitle>
             <DialogDescription className="text-center">How was your bathroom experience today?</DialogDescription>
           </DialogHeader>
 
-          <div className="grid grid-cols-3 gap-4 py-4">
-            <QuickLogOption
-              emoji="💩"
-              label="Just Okay"
-              description="Normal, nothing special"
-              selected={selectedOption === "okay"}
-              onClick={() => handleOptionSelect("okay")}
-              details={{
-                consistency: "normal",
-                color: "brown",
-                comfort: 3,
-              }}
-            />
-
+          <div className="grid grid-cols-3 gap-2 py-4">
             <QuickLogOption
               emoji="🤔"
               label="Weird"
@@ -80,6 +67,19 @@ export function QuickLogDialog({ open, onOpenChange }: QuickLogDialogProps) {
                 consistency: "loose",
                 color: "unusual",
                 comfort: 2,
+              }}
+            />
+
+            <QuickLogOption
+              emoji="💩"
+              label="Just Okay"
+              description="Normal, nothing special"
+              selected={selectedOption === "okay"}
+              onClick={() => handleOptionSelect("okay")}
+              details={{
+                consistency: "normal",
+                color: "brown",
+                comfort: 3,
               }}
             />
 

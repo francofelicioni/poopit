@@ -49,7 +49,7 @@ export function MascotReactions({
   }, [reactions, defaultMood, defaultMessage])
 
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    <div className={`flex-1 flex items-center gap-3 ${className}`}>
       <AnimatePresence mode="wait">
         <motion.div
           key={currentReaction.mood}
