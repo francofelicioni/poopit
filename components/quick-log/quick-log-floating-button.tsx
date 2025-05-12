@@ -20,10 +20,10 @@ export function QuickLogFloatingButton() {
         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
           <Button
             size="lg"
-            className="rounded-full h-14 w-14 bg-primary hover:bg-primary-hover shadow-lg"
+            className="bg-primary shadow-lg"
             onClick={() => setOpen(true)}
           >
-            <Zap className="h-6 w-6" />
+            <Zap className="size-6 text-white" />
             <span className="sr-only">Quick Log</span>
           </Button>
         </motion.div>

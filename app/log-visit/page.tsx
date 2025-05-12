@@ -2,29 +2,30 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { FoodSelector } from "@/components/food-selector/food-selector"
+import { AppContainer } from "@/components/layout/app-container"
+import { AppFooter } from "@/components/layout/app-footer"
+import { AppHeader } from "@/components/layout/app-header"
+import { CelebrationMascot } from "@/components/mascot/celebration-mascot"
+import { MascotReactions } from "@/components/mascot/mascot-reactions"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { EmojiIcon } from "@/components/ui/emoji-icon"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
+import { Textarea } from "@/components/ui/textarea"
 import { Save } from "lucide-react"
-import { MascotReactions } from "@/components/mascot/mascot-reactions"
-import { EmojiIcon } from "@/components/ui/emoji-icon"
-import { CelebrationMascot } from "@/components/mascot/celebration-mascot"
-import { FoodSelector } from "@/components/food-selector/food-selector"
-import { AppHeader } from "@/components/layout/app-header"
-import { AppContainer } from "@/components/layout/app-container"
-import { AppFooter } from "@/components/layout/app-footer"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function LogVisit() {
   const router = useRouter()
   const [comfort, setComfort] = useState([3])
   const [consistency, setConsistency] = useState("normal")
+  const [quantity, setQuantity] = useState([3])
   const [color, setColor] = useState("brown")
   const [foodConsumed, setFoodConsumed] = useState("")
   const [showCelebration, setShowCelebration] = useState(false)
@@ -32,7 +33,7 @@ export default function LogVisit() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Show celebration before redirecting
-    setShowCelebration(true)
+    // setShowCelebration(true)
     // In a real app, we would save the data here
   }
 
@@ -52,8 +53,8 @@ export default function LogVisit() {
         <AppContainer className="max-w-3xl">
           <Card className="border-card-border shadow-sm">
             <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex items-center justify-between gap-4">
+                <div className="space-y-1">
                   <CardTitle>Log Your Bathroom Visit</CardTitle>
                   <CardDescription>Record the details of your bathroom experience.</CardDescription>
                 </div>
@@ -93,6 +94,7 @@ export default function LogVisit() {
                   <Input id="date" type="datetime-local" defaultValue={new Date().toISOString().slice(0, 16)} />
                 </div>
 
+                {/* Consistency */}
                 <div className="space-y-2">
                   <Label>Consistency</Label>
                   <RadioGroup
@@ -102,13 +104,13 @@ export default function LogVisit() {
                     className="grid grid-cols-3 gap-2"
                   >
                     <div className="flex flex-col items-center space-y-1">
-                      <RadioGroupItem value="hard" id="hard" className="sr-only" />
+                      <RadioGroupItem value="loose" id="loose" className="sr-only" />
                       <Label
-                        htmlFor="hard"
+                        htmlFor="loose"
                         className="flex h-16 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-muted bg-card p-2 hover:bg-muted hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <EmojiIcon emoji="💎" label="hard" size="lg" />
-                        <span className="text-xs">Hard</span>
+                        <EmojiIcon emoji="💧" label="loose" size="lg" />
+                        <span className="text-xs">Loose</span>
                       </Label>
                     </div>
 
@@ -124,18 +126,45 @@ export default function LogVisit() {
                     </div>
 
                     <div className="flex flex-col items-center space-y-1">
-                      <RadioGroupItem value="loose" id="loose" className="sr-only" />
+                      <RadioGroupItem value="hard" id="hard" className="sr-only" />
                       <Label
-                        htmlFor="loose"
+                        htmlFor="hard"
                         className="flex h-16 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-muted bg-card p-2 hover:bg-muted hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                       >
-                        <EmojiIcon emoji="💧" label="loose" size="lg" />
-                        <span className="text-xs">Loose</span>
+                        <EmojiIcon emoji="💎" label="hard" size="lg" />
+                        <span className="text-xs">Hard</span>
                       </Label>
                     </div>
                   </RadioGroup>
                 </div>
 
+                <FoodSelector value={foodConsumed} onChange={setFoodConsumed} />
+
+                <div className="space-y-2">
+                  <Label htmlFor="notes">Additional Notes</Label>
+                  <Textarea id="notes" placeholder="Any other observations or comments?" className="min-h-[80px]" />
+                </div>
+
+                {/* Quantity */}
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <Label>Quantity</Label>
+                    <span className="text-sm">{quantity[0]}/5</span>
+                  </div>
+                  <Slider value={quantity} min={1} max={5} step={1} onValueChange={setQuantity} className="py-4" />
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span className="flex items-center">
+                      <EmojiIcon emoji="💩" label="a little" size="xs" className="mr-1" />
+                      A little
+                    </span>
+                    <span className="flex items-center">
+                      <EmojiIcon emoji="💩💩💩💩💩" label="a lot" size="xs" className="mr-1" />
+                      A lot
+                    </span>
+                  </div>
+                </div>
+
+                {/* Color */}
                 <div className="space-y-2">
                   <Label>Color</Label>
                   <Select defaultValue="brown" value={color} onValueChange={setColor}>
@@ -177,6 +206,7 @@ export default function LogVisit() {
                   </Select>
                 </div>
 
+                {/* Comfort Level */}
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <Label>Comfort Level</Label>
@@ -194,18 +224,12 @@ export default function LogVisit() {
                     </span>
                   </div>
                 </div>
-
-                <FoodSelector value={foodConsumed} onChange={setFoodConsumed} />
-
-                <div className="space-y-2">
-                  <Label htmlFor="notes">Additional Notes</Label>
-                  <Textarea id="notes" placeholder="Any other observations or comments?" className="min-h-[80px]" />
-                </div>
               </CardContent>
+
               <CardFooter>
                 <Button type="submit" className="w-full">
                   <Save className="mr-2 h-4 w-4" />
-                  Save Log
+                  Save
                 </Button>
               </CardFooter>
             </form>
@@ -214,6 +238,6 @@ export default function LogVisit() {
       </main>
 
       <AppFooter />
-    </div>
+    </div >
   )
 }
