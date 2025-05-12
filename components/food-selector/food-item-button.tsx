@@ -11,11 +11,18 @@ interface FoodItemButtonProps {
 }
 
 export function FoodItemButton({ emoji, label, selected, onClick }: FoodItemButtonProps) {
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    onClick?.()
+  }
+
   return (
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      onClick={onClick}
+      onClick={handleClick}
       className={cn(
         "flex flex-col items-center justify-center p-2 rounded-lg border-2 transition-colors",
         selected ? "border-primary bg-primary/10" : "border-border hover:border-primary/50 hover:bg-primary/5",
