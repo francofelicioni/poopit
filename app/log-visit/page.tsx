@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -20,6 +20,11 @@ import { FoodSelector } from "@/components/food-selector/food-selector"
 import { AppHeader } from "@/components/layout/app-header"
 import { AppContainer } from "@/components/layout/app-container"
 import { AppFooter } from "@/components/layout/app-footer"
+import { getBrowserSupabaseClient } from "@/lib/supabase/client"
+import { useSession } from "@supabase/auth-helpers-react"
+
+
+
 
 export default function LogVisit() {
   const router = useRouter()
@@ -28,12 +33,44 @@ export default function LogVisit() {
   const [color, setColor] = useState("brown")
   const [foodConsumed, setFoodConsumed] = useState("")
   const [showCelebration, setShowCelebration] = useState(false)
+  const supabase = getBrowserSupabaseClient()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const session = useSession()
+  useEffect(() => {
+    if (!session) {
+      router.push("/login")
+    }
+  }, [session])
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Show celebration before redirecting
+
+    setShowCelebration(false)
+    const user = session?.user
+    if (!user) {
+      alert("You must be logged in to save a log.")
+      return
+    }
+
+    const formData = new FormData(e.currentTarget as HTMLFormElement)
+    const timestamp = formData.get("date") as string
+    const notes = formData.get("notes") as string
+
+    const { error } = await supabase.from("poop_logs").insert({
+      user_id: user.id,
+      timestamp: new Date(timestamp).toISOString(),
+      color,
+      texture: consistency,
+      comfort_level: comfort[0],
+      notes: notes || null,
+    })
+
+    if (error) {
+      console.error("Insert failed", error)
+      alert("Failed to save log")
+      return
+    }
+
     setShowCelebration(true)
-    // In a real app, we would save the data here
   }
 
   return (
