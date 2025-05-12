@@ -32,6 +32,7 @@ export default function LogVisit() {
   const [foodConsumed, setFoodConsumed] = useState("")
   const [showCelebration, setShowCelebration] = useState(false)
   const supabase = getBrowserSupabaseClient()
+  const [notes, setNotes] = useState<string>("")
 
   const session = useSession()
   useEffect(() => {
@@ -39,32 +40,37 @@ export default function LogVisit() {
       router.push("/login")
     }
   }, [session])
-  const handleSubmit = async (e: React.FormEvent) => {  
-    e.preventDefault()
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
     setShowCelebration(false)
-    const user = session?.user
-    if (!user) {
+
+    if (!session?.user) {
       alert("You must be logged in to save a log.")
       return
     }
+    const form = e.currentTarget as HTMLFormElement
+    const formData = new FormData(form)
 
-    const formData = new FormData(e.currentTarget as HTMLFormElement)
-    const timestamp = formData.get("date") as string
-    const notes = formData.get("notes") as string
-
-    const { error } = await supabase.from("poop_logs").insert({
-      user_id: user.id,
-      timestamp: new Date(timestamp).toISOString(),
-      color,
-      texture: consistency,
-      comfort_level: comfort[0],
+    const timestampRaw = formData.get("date") as string
+    const timestamp = timestampRaw ? new Date(timestampRaw).toISOString() : new Date().toISOString()
+    
+    const poopLog = {
+      user_id: session.user.id,
+      timestamp,
+      consistency: consistency || null,
+      food_consumed: foodConsumed || null,
       notes: notes || null,
-    })
+      quantity: quantity || null,
+      color: color || null,
+      comfort_level: comfort[0],
+    };
+
+    const { error } = await supabase.from("poop_logs").insert(poopLog);
 
     if (error) {
       console.error("Insert failed", error)
-      alert("Failed to save log")
+      alert("Failed to save log: " + error.message)
       return
     }
 
@@ -135,7 +141,7 @@ export default function LogVisit() {
                     defaultValue="normal"
                     value={consistency}
                     onValueChange={setConsistency}
-                    className="grid grid-cols-3 gap-2"
+                    className="grid grid-cols-5 gap-2"
                   >
                     <div className="flex flex-col items-center space-y-1">
                       <RadioGroupItem value="loose" id="loose" className="sr-only peer" />
@@ -149,6 +155,17 @@ export default function LogVisit() {
                     </div>
 
                     <div className="flex flex-col items-center space-y-1">
+                      <RadioGroupItem value="soft" id="soft" className="sr-only peer" />
+                      <Label
+                        htmlFor="soft"
+                        className="flex h-16 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-muted bg-card p-2 hover:bg-muted hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                      >
+                        <EmojiIcon emoji="🍦" label="soft" size="lg" />
+                        <span className="text-xs">Soft</span>
+                      </Label>
+                    </div>
+
+                    <div className="flex flex-col items-center space-y-1">
                       <RadioGroupItem value="normal" id="normal" className="sr-only peer" />
                       <Label
                         htmlFor="normal"
@@ -156,6 +173,17 @@ export default function LogVisit() {
                       >
                         <EmojiIcon emoji="🥖" label="normal" size="lg" />
                         <span className="text-xs">Normal</span>
+                      </Label>
+                    </div>
+
+                    <div className="flex flex-col items-center space-y-1">
+                      <RadioGroupItem value="firm" id="firm" className="sr-only peer" />
+                      <Label
+                        htmlFor="firm"
+                        className="flex h-16 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-muted bg-card p-2 hover:bg-muted hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                      >
+                        <EmojiIcon emoji="🍚" label="firm" size="lg" />
+                        <span className="text-xs">Firm</span>
                       </Label>
                     </div>
 
@@ -176,7 +204,13 @@ export default function LogVisit() {
 
                 <div className="space-y-2">
                   <Label htmlFor="notes">Additional Notes</Label>
-                  <Textarea id="notes" placeholder="Any other observations or comments?" className="min-h-[80px]" />
+                  <Textarea
+                  id="notes"
+                  placeholder="Any other observations or comments?"
+                  className="min-h-[80px]"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  />
                 </div>
 
                 {/* Quantity */}
