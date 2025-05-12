@@ -138,7 +138,7 @@ export default function LogVisit() {
                     className="grid grid-cols-3 gap-2"
                   >
                     <div className="flex flex-col items-center space-y-1">
-                      <RadioGroupItem value="loose" id="loose" className="sr-only" />
+                      <RadioGroupItem value="loose" id="loose" className="sr-only peer" />
                       <Label
                         htmlFor="loose"
                         className="flex h-16 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-muted bg-card p-2 hover:bg-muted hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -149,7 +149,7 @@ export default function LogVisit() {
                     </div>
 
                     <div className="flex flex-col items-center space-y-1">
-                      <RadioGroupItem value="normal" id="normal" className="sr-only" />
+                      <RadioGroupItem value="normal" id="normal" className="sr-only peer" />
                       <Label
                         htmlFor="normal"
                         className="flex h-16 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-muted bg-card p-2 hover:bg-muted hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -160,7 +160,7 @@ export default function LogVisit() {
                     </div>
 
                     <div className="flex flex-col items-center space-y-1">
-                      <RadioGroupItem value="hard" id="hard" className="sr-only" />
+                      <RadioGroupItem value="hard" id="hard" className="sr-only peer" />
                       <Label
                         htmlFor="hard"
                         className="flex h-16 w-full cursor-pointer flex-col items-center justify-center rounded-md border-2 border-muted bg-card p-2 hover:bg-muted hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
