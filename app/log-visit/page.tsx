@@ -19,7 +19,9 @@ import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
 import { Save } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useSession } from "@supabase/auth-helpers-react"
+import { getBrowserSupabaseClient } from "@/lib/supabase/client"
 
 export default function LogVisit() {
   const router = useRouter()
@@ -37,7 +39,7 @@ export default function LogVisit() {
       router.push("/login")
     }
   }, [session])
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {  
     e.preventDefault()
 
     setShowCelebration(false)
