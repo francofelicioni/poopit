@@ -25,14 +25,14 @@ import { getBrowserSupabaseClient } from "@/lib/supabase/client"
 
 export default function LogVisit() {
   const router = useRouter()
-  const [comfort, setComfort] = useState([3])
+  const supabase = getBrowserSupabaseClient()
   const [consistency, setConsistency] = useState("normal")
+  const [foodConsumed, setFoodConsumed] = useState("")
+  const [notes, setNotes] = useState<string>("")
   const [quantity, setQuantity] = useState([3])
   const [color, setColor] = useState("brown")
-  const [foodConsumed, setFoodConsumed] = useState("")
+  const [comfort, setComfort] = useState([3])
   const [showCelebration, setShowCelebration] = useState(false)
-  const supabase = getBrowserSupabaseClient()
-  const [notes, setNotes] = useState<string>("")
 
   const session = useSession()
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function LogVisit() {
       consistency: consistency || null,
       food_consumed: foodConsumed || null,
       notes: notes || null,
-      quantity: quantity || null,
+      quantity: quantity[0] || null,
       color: color || null,
       comfort_level: comfort[0],
     };
